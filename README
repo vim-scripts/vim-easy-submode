@@ -1,0 +1,9 @@
+This is a mirror of http://www.vim.org/scripts/script.php?script_id=4463
+
+*easysubmode* is a Vim plugin to provide Ex-commands for using vim-submode easily. 
+vim-submode:
+https://github.com/kana/vim-submode
+https://github.com/thinca/vim-submode/tree/my-master
+
+Latest version:
+https://github.com/boolfool/vim-easy-submode

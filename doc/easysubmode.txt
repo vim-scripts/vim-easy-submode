@@ -1,0 +1,138 @@
+*easysubmode.txt* use vim-submode easily
+
+Version 0.0.0
+Author boolfool <boolfool0130@gmail.com>
+License: MIT license  {{{
+    Permission is hereby granted, free of charge, to any person obtaining
+    a copy of this software and associated documentation files (the
+    "Software"), to deal in the Software without restriction, including
+    without limitation the rights to use, copy, modify, merge, publish,
+    distribute, sublicense, and/or sell copies of the Software, and to
+    permit persons to whom the Software is furnished to do so, subject to
+    the following conditions:
+
+    The above copyright notice and this permission notice shall be included
+    in all copies or substantial portions of the Software.
+
+    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+    OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+    MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+    IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
+    CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+    TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+    SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+}}}
+
+CONTENTS					*easysubmode-contents*
+
+Introduction      |easysubmode-introduction|
+Interface     |easysubmode-interface|
+  Commands      |easysubmode-commands|
+  Functions     |easysubmode-functions|
+
+
+
+
+==============================================================================
+INTRODUCTION					*easysubmode-introduction*
+
+*easysubmode* is a Vim plugin to provide Ex-commands for using vim-submode
+easily. 
+vim-submode:
+  https://github.com/kana/vim-submode
+  https://github.com/thinca/vim-submode/tree/my-master
+
+original settings:
+>
+	call submode#enter_with('undo/redo', 'n', '', 'g-', 'g-')
+	call submode#enter_with('undo/redo', 'n', '', 'g+', 'g+')
+	call submode#leave_with('undo/redo', 'n', '', '<Esc>')
+	call submode#map('undo/redo', 'n', '', '-', 'g-')
+	call submode#map('undo/redo', 'n', '', '+', 'g+')
+<
+
+following settings:
+>
+        SubmodeDefine undo/redo
+        Submode n <enter> g- g-
+        Submode n <enter> g+ g+
+        Submode n <leave> n <ESC>
+        Submode n - g-
+        Submode n + g+
+        SubmodeDefineEnd
+<
+
+You can define submode like declare mapping.
+
+The above settings mean:
+- Firstly define a new submode name
+- <enter>: submode#enter_with()
+- <leave>: submode#leave_with()
+- no type: submode#map()
+- Lastly the end of the submode
+
+
+
+
+==============================================================================
+INTERFACE					*easysubmode-interface*
+
+------------------------------------------------------------------------------
+COMMANDS					*easysubmode-commands*
+
+:SubmodeDefine {submode}                        *:SubmodeDefine*
+                        Declare to start the definition of {submode}.
+
+                                                *:Submode*
+:Submode {modes}, {types}, {options}, {lhs}, {rhs}
+                        Call each functions.
+
+                        {modes}
+                            There are two ways to declare modes.
+                            1: ...map
+                              When the end of word has "map", the mode is
+                              equal to the first letter of the word.
+>
+                              :Submode nnoremap + g+
+<
+                              "nnoremap" means "n".
+                              In this case, you can define only one type.
+                            2: letters
+>
+                              :Submode nvc + g+
+<
+
+                        {types}
+                            The types are likely functions in vim-submode.
+                            Type is submode#map() if omitted.
+
+                            <enter> submode#enter_with()
+                            <leave> submode#leave_with()
+                            <unmap> submode#unmap()
+
+                        {options}
+                            <buffer>  b
+                            <expr>    e
+                            <unique>  u
+                            <silent>  s
+                            <r>       r
+                            <x>       x
+
+                        {lhs}
+                            A key sequence to type. 
+
+                        {rhs}
+                            rhs is equal to {lhs} if omitted.
+
+:SubmodeDefineEnd                               *:SubmodeDefineEnd*
+                            Declare the end of the definition.
+
+------------------------------------------------------------------------------
+FUNCTIONS					*easysubmode-functions*
+
+easysubmode#load()      *easysubmode#load()*
+  Load this plugin.  You have to call this in your vimrc
+  if you want to use this plugin in your vimrc.
+
+==============================================================================
+vim:tw=78:ts=8:ft=help:norl:fen:fdl=0:fdm=marker
